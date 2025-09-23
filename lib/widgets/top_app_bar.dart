@@ -15,7 +15,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
           ),
           Spacer(),
-          Icon(Icons.camera_alt_outlined),
+          Icon(Icons.search),
           SizedBox(width: 20),
           Icon(Icons.more_vert),
         ],

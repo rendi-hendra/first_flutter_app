@@ -11,10 +11,9 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
     return SalomonBottomBar(
       currentIndex: _currentIndex,
       onTap: (i) => setState(() => _currentIndex = i),
@@ -25,7 +24,7 @@ class _BottomBarState extends State<BottomBar> {
             position: badges.BadgePosition.topEnd(top: -10, end: -10),
             badgeContent: const Text(
               '20',
-              style: TextStyle(color: Colors.white, fontSize: 10),
+              style: TextStyle(color: Colors.black, fontSize: 10),
             ),
             badgeStyle: const badges.BadgeStyle(
               badgeColor: Colors.green,

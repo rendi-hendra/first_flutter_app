@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/status_page.dart';
 import 'package:provider/provider.dart';
 import 'state/my_app_state.dart';
 import 'screens/my_home_page.dart';
@@ -42,6 +43,10 @@ class MainApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: MyHomePage(),
+        routes: <String, WidgetBuilder>{
+          '/home': (BuildContext context) => MyHomePage(),
+          '/status': (BuildContext context) => StatusList(),
+        },
       ),
     );
   }

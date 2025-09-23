@@ -1,28 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
+class User {
+  String name;
+  String massage;
+  User(this.name, this.massage);
+
+  User.formJson(Map<String, dynamic> json)
+    : name = json['name'],
+      massage = json['massage'];
+
+  Map<String, dynamic> toJson() => {'name': name, 'massage': massage};
+}
+
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-  var count = 0;
+  final List<String> _name = [];
+  final List<String> _messages = [];
 
-  void getNext() {
-    current = WordPair.random();
+  List<String> get name => _name;
+  List<String> get messages => _messages;
+  void setName(String newName) {
+    _name.add(newName);
     notifyListeners();
   }
 
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
+  void setMessages(String newMessage) {
+    _messages.add(newMessage);
     notifyListeners();
   }
 
-  void increment() {
-    count++;
+  void clear() {
+    _name.clear();
+    _messages.clear();
     notifyListeners();
   }
 }

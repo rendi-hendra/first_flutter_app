@@ -1,184 +1,123 @@
 import 'package:flutter/material.dart';
-import '../widgets/bottom_bar.dart';
-import '../widgets/top_app_bar.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_application_1/widgets/chat_list.dart';
+import 'package:flutter_application_1/widgets/floating_action_button.dart';
+import 'package:flutter_application_1/widgets/grouping_chat.dart';
+import 'package:flutter_application_1/widgets/search_bar.dart';
+import 'package:flutter_application_1/widgets/top_app_bar.dart';
+import 'package:flutter_application_1/widgets/bottom_bar.dart';
+import 'package:badges/badges.dart' as badges;
 
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // var appState = context.watch<MyAppState>();
-
     final theme = Theme.of(context);
+    // final user = MyAppState();
 
     return Scaffold(
       appBar: TopAppBar(),
       backgroundColor: theme.colorScheme.primary,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15), // ✅
-                    child: SizedBox(
-                      height: 50,
-                      child: TextField(
-                        cursorColor: theme.colorScheme.secondaryFixed,
-                        cursorHeight: 20,
-                        decoration: InputDecoration(
-                          prefixIcon: Padding(
-                            padding: EdgeInsetsGeometry.directional(
-                              start: 20,
-                              end: 5,
-                            ),
-                            child: Icon(Icons.search),
-                          ),
-                          hintText: 'Search...',
-                          hintStyle: TextStyle(
-                            color: theme.colorScheme.secondaryFixed.withValues(
-                              alpha: 0.5,
-                            ),
-                          ),
-                          filled: true,
-                          fillColor: theme.colorScheme.secondary,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: SizedBox(
-                height: 35,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (_, i) => TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      ['All', 'Unread 20', 'Favourites', 'Groups 13', '+'][i],
-                    ),
-                  ),
-                  separatorBuilder: (_, __) => SizedBox(width: 10),
-                  itemCount: 5,
+      body: PageView(
+        controller: PageController(viewportFraction: 1),
+        children: [
+          Column(
+            children: [
+              SearchBarApp(),
+              GroupingChat(),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: ChatList(),
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                child: ListView.separated(
-                  itemCount: 8,
-                  itemBuilder: (_, i) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+            ],
+          ),
+          Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                  ),
+                  Text(
+                    'Status',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 40),
+                  ),
+                  badges.Badge(
+                    position: badges.BadgePosition.bottomEnd(
+                      bottom: 1,
+                      end: -3,
+                    ),
+                    badgeContent: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 15,
+                    ),
+                    badgeStyle: const badges.BadgeStyle(
+                      badgeColor: Colors.green,
+                      padding: EdgeInsets.all(4),
+                    ),
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                      ),
+                      backgroundColor: theme.colorScheme.secondary,
+                      maxRadius: 25,
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Add Status',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
-                        backgroundColor: theme.colorScheme.secondary,
-                        maxRadius: 25,
                       ),
-                      title: Text(
-                        [
-                          'Rendi',
-                          'Prabowo',
-                          'Jokowi',
-                          'Mark Zuckerberg',
-                          'WhatsApp',
-                          'Group Programmer',
-                          'Group Android Dev',
-                          'Group Flutter Dev',
-                        ][i],
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        [
-                          'test',
-                          'test',
-                          'test',
-                          'test',
-                          'test',
-                          'test',
-                          'test',
-                          'test',
-                        ][i],
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      SizedBox(height: 5),
+                      Text(
+                        'Disappear after 24 hours',
                         style: TextStyle(
                           color: theme.colorScheme.secondaryFixed.withValues(
                             alpha: 0.7,
                           ),
+                          fontSize: 16,
                         ),
                       ),
-                      trailing: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            [
-                              'Today',
-                              'Today',
-                              'Today',
-                              'Today',
-                              'Today',
-                              'Today',
-                              'Today',
-                              'Today',
-                            ][i],
-                            style: TextStyle(color: Colors.green),
-                          ),
-                          SizedBox(height: 10),
-                          CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.green,
-                            child: Text(
-                              ['1', '50', '90', '10', '20', '80', '2', '5'][i],
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
-                  separatorBuilder: (_, __) => SizedBox(width: 10),
+                ],
+              ),
+              ExpansionTile(
+                title: const Text('Viewed updates'),
+                iconColor: theme.colorScheme.secondaryFixed,
+                shape: Border(
+                  top: BorderSide(color: theme.colorScheme.primary, width: 0),
+                  bottom: BorderSide(
+                    color: theme.colorScheme.primary,
+                    width: 0,
+                  ),
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: const BottomBar(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('AlertDialog Title'),
-            content: const Text('AlertDialog description'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'Cancel'),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'OK'),
-                child: const Text('OK'),
+                children: [
+                  ListTile(title: SizedBox(height: 554, child: ChatList())),
+                ],
               ),
             ],
           ),
-        ),
-        // shape: const CircleBorder(),
-        backgroundColor: Colors.green,
-        elevation: 0,
-        splashColor: Colors.white,
-        tooltip: 'Alert Dialog',
-        child: Icon(MdiIcons.messagePlus, color: theme.colorScheme.onPrimary),
+        ],
       ),
+      bottomNavigationBar: const BottomBar(),
+      bottomSheet: Container(height: 1, color: theme.colorScheme.secondary),
+      floatingActionButton: FloatingActionButtonWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
