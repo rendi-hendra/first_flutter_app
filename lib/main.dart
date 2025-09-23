@@ -43,9 +43,10 @@ class MainApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: MyHomePage(),
+        initialRoute: '/home',
         routes: <String, WidgetBuilder>{
           '/home': (BuildContext context) => MyHomePage(),
-          '/status': (BuildContext context) => StatusList(),
+          '/status': (BuildContext context) => StatusPage(),
         },
       ),
     );
