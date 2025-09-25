@@ -11,7 +11,14 @@ class GroupingChat extends StatelessWidget {
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, i) => TextButton(
-            onPressed: () {},
+            onPressed: () {
+              print(i);
+            },
+            style: TextButton.styleFrom(
+              backgroundColor: i == 0
+                  ? Colors.green.withAlpha(200)
+                  : Colors.transparent,
+            ),
             child: Text(
               ['All', 'Unread 20', 'Favourites', 'Groups 13', '+'][i],
             ),

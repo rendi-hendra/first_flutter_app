@@ -18,7 +18,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late final PageController _pageController;
-  var title = 'WhatsApp';
+
+  final List<Map<String, dynamic>> _appBarConfig = [
+    {
+      'title': 'WhatsApp',
+      'firstIcon': Icons.camera_alt_outlined,
+      'secondIcon': Icons.more_vert,
+      'style': null,
+    },
+    {
+      'title': 'Updates',
+      'firstIcon': Icons.search,
+      'secondIcon': Icons.more_vert,
+      'style': TextStyle(fontStyle: FontStyle.normal),
+    },
+  ];
 
   @override
   void initState() {
@@ -36,16 +50,22 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     final theme = Theme.of(context);
+    final currentPage = appState.pageCount;
+    final config = _appBarConfig[currentPage];
 
     return Scaffold(
-      appBar: TopAppBar(title: title),
+      appBar: TopAppBar(
+        title: config['title'],
+        style: config['style'],
+        firstIcon: config['firstIcon'],
+        secondIcon: config['secondIcon'],
+        onFirstPressed: () => print('First icon page $currentPage'),
+        onSecondPressed: () => print('Second icon page $currentPage'),
+      ),
       backgroundColor: theme.colorScheme.primary,
       body: PageView(
         controller: _pageController,
-        onPageChanged: (value) => {
-          appState.setPageCount(value),
-          if (value < 1) {title = 'WhatsApp'} else {title = 'Updates'},
-        },
+        onPageChanged: (value) => {appState.setPageCount(value)},
         children: <Widget>[
           Column(
             children: [

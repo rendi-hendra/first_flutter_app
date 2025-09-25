@@ -67,14 +67,39 @@ class StatusPage extends StatelessWidget {
             ),
           ],
         ),
-        ExpansionTile(
-          title: const Text('Viewed updates'),
-          iconColor: theme.colorScheme.secondaryFixed,
-          shape: Border(
-            top: BorderSide(color: theme.colorScheme.primary, width: 0),
-            bottom: BorderSide(color: theme.colorScheme.primary, width: 0),
+        Theme(
+          data: ThemeData(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            useMaterial3: false,
           ),
-          children: [ListTile(title: SizedBox(height: 554, child: ChatList()))],
+          child: ExpansionTile(
+            title: const Text('Viewed updates'),
+            textColor: theme.colorScheme.secondaryFixed,
+            collapsedTextColor: theme.colorScheme.secondaryFixed,
+            collapsedIconColor: theme.colorScheme.secondaryFixed,
+            iconColor: theme.colorScheme.secondaryFixed,
+            shape: Border(
+              top: BorderSide(color: Colors.transparent, width: 0),
+              bottom: BorderSide(color: Colors.transparent, width: 0),
+            ),
+            children: [
+              Theme(
+                data: Theme.of(context).copyWith(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  colorScheme: Theme.of(
+                    context,
+                  ).colorScheme.copyWith(surfaceTint: Colors.transparent),
+                ),
+                child: ListTile(
+                  title: SizedBox(height: 554, child: ChatList()),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
