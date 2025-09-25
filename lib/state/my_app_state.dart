@@ -7,10 +7,4 @@ class MyAppState extends ChangeNotifier {
     pageCount = newCount;
     notifyListeners();
   }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   notifyListeners();
-  // }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TopAppBar({super.key});
+  const TopAppBar({super.key, required this.title});
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -11,11 +12,11 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           Text(
-            'WhatsApp',
+            title,
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
           ),
           Spacer(),
-          Icon(Icons.search),
+          Icon(Icons.camera_alt_outlined),
           SizedBox(width: 20),
           Icon(Icons.more_vert),
         ],

@@ -5,7 +5,8 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:badges/badges.dart' as badges;
 
 class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+  final PageController pageController;
+  const BottomBar({super.key, required this.pageController});
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -17,17 +18,14 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    final pageCount = appState.pageCount;
-    _currentIndex = pageCount;
+    _currentIndex = appState.pageCount;
+
     return SalomonBottomBar(
       currentIndex: _currentIndex,
-      onTap: (i) => setState(() {
-        // if (i == 0) {
-        //   Navigator.pushNamed(context, '/home');
-        // } else if (i == 1) {
-        //   Navigator.pushNamed(context, '/status');
-        // }
-      }),
+      onTap: (i) {
+        appState.setPageCount(i);
+        widget.pageController.jumpToPage(i);
+      },
       items: [
         /// ===== Chats (dengan badge) =====
         SalomonBottomBarItem(
@@ -43,14 +41,14 @@ class _BottomBarState extends State<BottomBar> {
             ),
             child: const Icon(Icons.chat, color: Colors.white),
           ),
-          title: Text("Chats ${_currentIndex.toString()}"),
+          title: Text("Chats"),
           selectedColor: Colors.green,
         ),
 
         /// ===== Updates =====
         SalomonBottomBarItem(
           icon: const Icon(Icons.circle_outlined, color: Colors.white),
-          title: Text("Updates ${_currentIndex.toString()}"),
+          title: Text("Updates"),
           selectedColor: Colors.green,
         ),
 
