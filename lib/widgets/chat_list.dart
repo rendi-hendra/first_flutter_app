@@ -48,7 +48,7 @@ class ChatList extends StatelessWidget {
             ),
           ),
           trailing: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 [

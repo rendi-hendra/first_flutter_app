@@ -32,7 +32,7 @@ class _BottomBarState extends State<BottomBar> {
           icon: badges.Badge(
             position: badges.BadgePosition.topEnd(top: -10, end: -10),
             badgeContent: const Text(
-              '20',
+              '12',
               style: TextStyle(color: Colors.black, fontSize: 10),
             ),
             badgeStyle: const badges.BadgeStyle(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:flutter_application_1/widgets/chat_list.dart';
+import 'package:flutter_application_1/widgets/list_widgets.dart';
 
 class StatusPage extends StatelessWidget {
   const StatusPage({super.key});
@@ -83,6 +83,7 @@ class StatusPage extends StatelessWidget {
               top: BorderSide(color: Colors.transparent, width: 0),
               bottom: BorderSide(color: Colors.transparent, width: 0),
             ),
+            expansionAnimationStyle: AnimationStyle.noAnimation,
             children: [
               Theme(
                 data: Theme.of(context).copyWith(
@@ -94,8 +95,16 @@ class StatusPage extends StatelessWidget {
                     context,
                   ).colorScheme.copyWith(surfaceTint: Colors.transparent),
                 ),
-                child: ListTile(
-                  title: SizedBox(height: 554, child: ChatList()),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    children: [
+                      ListWidgets(title: 'Rendi', lastChat: 'Today'),
+                      ListWidgets(title: 'Rendi', lastChat: 'Today'),
+                      ListWidgets(title: 'Rendi', lastChat: 'Today'),
+                      ListWidgets(title: 'Rendi', lastChat: 'Today'),
+                    ],
+                  ),
                 ),
               ),
             ],
