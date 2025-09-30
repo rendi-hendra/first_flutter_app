@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/chat_model.dart';
 import 'package:flutter_application_1/screens/status_page.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'state/my_app_state.dart';
 import 'screens/my_home_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final dir = await getApplicationDocumentsDirectory();
+  Hive.defaultDirectory = dir.path;
+  // init dulu
+  await Hive.initFlutter();
+
+  // buka box dulu sebelum dipakai
+  await Hive.openBox('chat');
   runApp(const MainApp());
+}
+
+extension on HiveInterface {
+  set defaultDirectory(String defaultDirectory) {}
 }
 
 class MainApp extends StatelessWidget {

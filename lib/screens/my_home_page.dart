@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/status_page.dart';
 import 'package:flutter_application_1/state/my_app_state.dart';
-import 'package:flutter_application_1/widgets/chat_list.dart';
 import 'package:flutter_application_1/widgets/floating_action_button.dart';
 import 'package:flutter_application_1/widgets/grouping_chat.dart';
 import 'package:flutter_application_1/widgets/list_widgets.dart';
 import 'package:flutter_application_1/widgets/search_bar.dart';
 import 'package:flutter_application_1/widgets/top_app_bar.dart';
 import 'package:flutter_application_1/widgets/bottom_bar.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -19,7 +19,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late final PageController _pageController;
-
   final List<Map<String, dynamic>> _appBarConfig = [
     {
       'title': 'WhatsApp',
@@ -53,6 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final theme = Theme.of(context);
     final currentPage = appState.pageCount;
     final config = _appBarConfig[currentPage];
+    final listChat = appState.listChat;
+    final getAllUser = appState.getAllUsers();
 
     return Scaffold(
       appBar: TopAppBar(
@@ -60,8 +61,13 @@ class _MyHomePageState extends State<MyHomePage> {
         style: config['style'],
         firstIcon: config['firstIcon'],
         secondIcon: config['secondIcon'],
-        onFirstPressed: () => print('First icon page $currentPage'),
-        onSecondPressed: () => print('Second icon page $currentPage'),
+        onFirstPressed: () => {
+          appState.addChatAll(appState.listChat),
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Add'))),
+        },
+        onSecondPressed: () => appState.removeAllChat(),
       ),
       backgroundColor: theme.colorScheme.primary,
       body: PageView(
@@ -73,9 +79,18 @@ class _MyHomePageState extends State<MyHomePage> {
               SearchBarApp(),
               GroupingChat(),
               Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: ChatList(),
+                child: ListView.separated(
+                  itemCount: getAllUser.length,
+                  itemBuilder: (BuildContext contex, int index) {
+                    return ListWidgets(
+                      title: getAllUser[index]['title'],
+                      lastChat: getAllUser[index]['lastChat'],
+                      date: getAllUser[index]['date'],
+                      notification: getAllUser[index]['notification'],
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(height: 15),
                 ),
               ),
             ],

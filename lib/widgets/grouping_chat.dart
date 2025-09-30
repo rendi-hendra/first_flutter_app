@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/state/my_app_state.dart';
+import 'package:provider/provider.dart';
 
 class GroupingChat extends StatelessWidget {
   const GroupingChat({super.key});
   @override
   Widget build(BuildContext context) {
+    var appSate = context.watch<MyAppState>();
+    var currentGroup = appSate.currentGroup;
     return Padding(
       padding: EdgeInsets.all(20),
       child: SizedBox(
@@ -12,11 +16,12 @@ class GroupingChat extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, i) => TextButton(
             onPressed: () {
-              print(i);
+              appSate.setCurrentGroup(i);
+              print(appSate.currentGroup);
             },
             style: TextButton.styleFrom(
-              backgroundColor: i == 0
-                  ? Colors.green.withAlpha(200)
+              backgroundColor: i == currentGroup
+                  ? Colors.green.withAlpha(150)
                   : Colors.transparent,
             ),
             child: Text(

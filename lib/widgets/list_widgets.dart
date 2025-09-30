@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/state/my_app_state.dart';
-import 'package:provider/provider.dart';
-import 'package:badges/badges.dart' as badges;
 
 class ListWidgets extends StatefulWidget {
   const ListWidgets({
@@ -28,7 +25,7 @@ class _ListWidgetsState extends State<ListWidgets> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    var appSate = context.watch<MyAppState>();
+    // var appSate = context.watch<MyAppState>();
     final title = widget.title;
     final lastChat = widget.lastChat;
     final date = widget.date;
@@ -46,22 +43,29 @@ class _ListWidgetsState extends State<ListWidgets> {
           title: Text(title),
           subtitle: Text(lastChat ?? ''),
           trailing: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (date != null)
-                Text(date.toString(), style: TextStyle(color: Colors.green)),
-              SizedBox(height: 10),
-              if (notification != null)
-                badges.Badge(
-                  position: badges.BadgePosition.topEnd(top: -10, end: -10),
-                  badgeContent: Text(
-                    notification,
-                    style: TextStyle(color: Colors.black, fontSize: 10),
-                  ),
-                  badgeStyle: const badges.BadgeStyle(
-                    badgeColor: Colors.green,
-                    padding: EdgeInsets.all(4),
-                  ),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (date != null)
+                    Text(
+                      date,
+                      style: TextStyle(
+                        color: notification != null
+                            ? Colors.green
+                            : Colors.white,
+                      ),
+                    ),
+                  SizedBox(height: 10),
+                  if (notification != null)
+                    CircleAvatar(
+                      radius: 10,
+                      backgroundColor: Colors.green,
+                      child: Text(notification, style: TextStyle(fontSize: 12)),
+                    ),
+                ],
+              ),
             ],
           ),
         ),
