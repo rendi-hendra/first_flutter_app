@@ -7,7 +7,6 @@ import 'package:flutter_application_1/widgets/list_widgets.dart';
 import 'package:flutter_application_1/widgets/search_bar.dart';
 import 'package:flutter_application_1/widgets/top_app_bar.dart';
 import 'package:flutter_application_1/widgets/bottom_bar.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -52,8 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final theme = Theme.of(context);
     final currentPage = appState.pageCount;
     final config = _appBarConfig[currentPage];
-    final listChat = appState.listChat;
     final getAllUser = appState.getAllUsers();
+    final selectChat = appState.selectChat;
 
     return Scaffold(
       appBar: TopAppBar(
@@ -82,11 +81,34 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView.separated(
                   itemCount: getAllUser.length,
                   itemBuilder: (BuildContext contex, int index) {
-                    return ListWidgets(
-                      title: getAllUser[index]['title'],
-                      lastChat: getAllUser[index]['lastChat'],
-                      date: getAllUser[index]['date'],
-                      notification: getAllUser[index]['notification'],
+                    return GestureDetector(
+                      onLongPress: (() => {
+                        appState.setSelectChat(index),
+                        print(selectChat),
+                        // if (selectChat == index)
+                        //   {appState.setSelectChat(null)}
+                        // else
+                        //   {appState.setSelectChat(index)},
+                      }),
+                      child: Column(
+                        children: [
+                          Card(
+                            color: selectChat.isNotEmpty
+                                ? Colors.green.withAlpha(80)
+                                : Colors.transparent,
+                            // color: [Colors.green.withAlpha(80)][index],
+                            shape: Border.all(style: BorderStyle.none),
+                            elevation: 0,
+                            margin: EdgeInsets.symmetric(),
+                            child: ListWidgets(
+                              title: getAllUser[index]['title'],
+                              lastChat: getAllUser[index]['lastChat'],
+                              date: getAllUser[index]['date'],
+                              notification: getAllUser[index]['notification'],
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) =>

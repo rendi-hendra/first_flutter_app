@@ -33,6 +33,7 @@ class _ListWidgetsState extends State<ListWidgets> {
 
     return Column(
       children: <Widget>[
+        // GestureDetector(onLongPress: (() => print('Press'))),
         ListTile(
           leading: CircleAvatar(
             backgroundImage: NetworkImage(widget.imageProfil ?? ''),

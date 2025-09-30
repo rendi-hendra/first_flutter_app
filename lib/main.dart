@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/model/chat_model.dart';
 import 'package:flutter_application_1/screens/status_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +10,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dir = await getApplicationDocumentsDirectory();
   Hive.defaultDirectory = dir.path;
-  // init dulu
+
   await Hive.initFlutter();
 
-  // buka box dulu sebelum dipakai
   await Hive.openBox('chat');
   runApp(const MainApp());
 }
