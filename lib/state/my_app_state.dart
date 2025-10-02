@@ -4,9 +4,11 @@ import 'package:hive/hive.dart';
 class MyAppState extends ChangeNotifier {
   var pageCount = 0;
   var currentGroup = 0;
-  List<dynamic> selectChat = [];
+  // Set selectChat = {};
+  var listSelectedChat = [];
 
   final chatBox = Hive.box('chat');
+  var activePress = false;
 
   final List<Map<String, dynamic>> listChat = [
     {
@@ -22,6 +24,12 @@ class MyAppState extends ChangeNotifier {
       'notification': null,
     },
   ];
+
+  void setActivePress(dynamic index) {
+    activePress = !activePress;
+    print(index);
+    notifyListeners();
+  }
 
   List getAllUsers() {
     final data = chatBox.keys.map((key) {
@@ -72,14 +80,11 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectChat(dynamic index) {
-    // selectChat = index;
-    if (selectChat.contains(index)) {
-      var selectIndex = selectChat.indexOf(index);
-      selectChat.removeAt(selectIndex);
-      notifyListeners();
-    } else {
-      selectChat.add(index);
+  void setSelectChat(int index) {
+    print(listSelectedChat);
+    if (!listSelectedChat.contains(index)) {
+      listSelectedChat.add(index);
+      print(listSelectedChat);
       notifyListeners();
     }
   }

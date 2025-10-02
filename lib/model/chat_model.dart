@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 0)
 class Chat {
   Chat({required this.name, this.message, this.notification = 1});
 

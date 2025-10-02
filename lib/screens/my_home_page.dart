@@ -52,7 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final currentPage = appState.pageCount;
     final config = _appBarConfig[currentPage];
     final getAllUser = appState.getAllUsers();
-    final selectChat = appState.selectChat;
+    final listSelectChat = appState.listSelectedChat;
+    final activePress = appState.activePress;
 
     return Scaffold(
       appBar: TopAppBar(
@@ -82,20 +83,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemCount: getAllUser.length,
                   itemBuilder: (BuildContext contex, int index) {
                     return GestureDetector(
-                      onLongPress: (() => {
-                        appState.setSelectChat(index),
-                        print(selectChat),
-                        // if (selectChat == index)
-                        //   {appState.setSelectChat(null)}
-                        // else
-                        //   {appState.setSelectChat(index)},
-                      }),
+                      onLongPress: (() => {appState.setSelectChat(index)}),
                       child: Column(
                         children: [
                           Card(
-                            color: selectChat.isNotEmpty
-                                ? Colors.green.withAlpha(80)
-                                : Colors.transparent,
+                            color: index == 0
+                                ? Colors.transparent
+                                : Colors.green.withAlpha(80),
                             // color: [Colors.green.withAlpha(80)][index],
                             shape: Border.all(style: BorderStyle.none),
                             elevation: 0,
